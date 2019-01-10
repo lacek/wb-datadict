@@ -21,18 +21,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <meta name="author" content="WB Datadict">
   <meta name="description" content="[PROJECTNAME] Data Dictionary.">
   <title>[PROJECTNAME] Data Dictionary</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script>
     // Highlight table corresponding to the current fragment in the URL.
-    $(document).ready(function(){
-      $("a").click(function() {
-        var elem = $(this);
-        // Remove all classes from tables.
-        $("table").removeClass( "focused" )
-        // Get a.href value and extract its fragment id.
-        var id = elem.attr("href");
-        // Highlight table using fragment id.
-        $(id).addClass( "focused" );
+    document.addEventListener("DOMContentLoaded", function(){
+      var tables = document.querySelectorAll("table");
+      document.querySelectorAll("nav a").forEach(function(link) {
+          link.addEventListener("click", function() {
+            // Remove all classes from tables.
+            tables.forEach(function(table) {
+                table.classList.remove("focused");
+            });
+            // Get a.href value and extract its fragment id.
+            // Highlight table using fragment id.
+            document.querySelector(this.hash).classList.add("focused");
+          });
       });
     });
   </script>
